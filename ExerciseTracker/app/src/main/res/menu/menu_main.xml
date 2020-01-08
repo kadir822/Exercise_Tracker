@@ -3,8 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.exercisetracker.MainActivity">
     <item
+        android:id="@+id/action_menu"
+        android:orderInCategory="100"
+        android:title="Menu"
+        app:showAsAction="never" />
+
+    <--! add submenu -->
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/item1"
+        android:icon="@drawable/ic_action_bluetooth"
+        android:title="bluetooth"
+        app:showAsAction="always"
+    />
+
+    <item
+        android:id="@+id/item2"
+        android:icon="@drawable/ic_action_share"
+        android:title="share"
+        app:showAsAction="always"
+        />
+
+
 </menu>
