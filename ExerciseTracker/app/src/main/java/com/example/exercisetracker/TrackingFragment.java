@@ -8,6 +8,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 
+import android.os.Debug;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.exercisetracker.MainActivity;
-import com.example.exercisetracker.R;
+import java.io.Console;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TrackingFragment extends Fragment implements SensorEventListener {
     final short POLL_FREQUENCY = 200; //in milliseconds
@@ -32,9 +36,9 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
     TextView accX;
     TextView accY;
     TextView accZ;
-    TextView accWorldX;
-    TextView accWorldY;
-    TextView accWorldZ;
+    TextView gravityX;
+    TextView gravityY;
+    TextView gravityZ;
     TextView gyroX;
     TextView gyroY;
     TextView gyroZ;
@@ -54,6 +58,13 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
     float[] gravityMatrix = new float[3];
     float[] magneticMatrix = new float[3];
     float[] rotationMatrix = new float[9];
+
+
+    int switchStateTracker = 0;
+    float pushupCounter = 0;
+    float lastLowPoint = 0;
+
+    int timer = 0;
 
     public TrackingFragment() {
         // Required empty public constructor
@@ -82,9 +93,9 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
         accX = (TextView) view.findViewById(R.id.raw_value_acc_x);
         accY = (TextView) view.findViewById(R.id.raw_value_acc_y);
         accZ = (TextView) view.findViewById(R.id.raw_value_acc_z);
-        accWorldX = (TextView) view.findViewById(R.id.raw_value_acc_world_x);
-        accWorldY = (TextView) view.findViewById(R.id.raw_value_acc_world_y);
-        accWorldZ = (TextView) view.findViewById(R.id.raw_value_acc_world_z);
+        gravityX = (TextView) view.findViewById(R.id.raw_value_grav_x);
+        gravityY = (TextView) view.findViewById(R.id.raw_value_grav_y);
+        gravityZ = (TextView) view.findViewById(R.id.raw_value_grav_z);
         gyroX = (TextView) view.findViewById(R.id.raw_value_gyro_x);
         gyroY = (TextView) view.findViewById(R.id.raw_value_gyro_y);
         gyroZ = (TextView) view.findViewById(R.id.raw_value_gyro_z);
@@ -120,6 +131,8 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         sensor = event.sensor;
 
+        timer++;
+
         int i = sensor.getType();
         if (i == MainActivity.TYPE_ACCELEROMETER) {
             accelerometerMatrix = event.values;
@@ -131,6 +144,23 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
             magneticMatrix = event.values;
         }
 
+        switch(switchStateTracker){
+            case(0):
+                Log.d("Timer:", ""+timer);
+                findLowPoint(gravityMatrix[1]);
+                break;
+            case(1):
+                findHighPoint(gravityMatrix[1]);
+                Log.d("Timer:", ""+timer);
+                break;
+            case(2):
+                confirmPushup(gravityMatrix[1]);
+                Log.d("Timer:", ""+timer);
+                break;
+            default:
+                break;
+        }
+
         long curTime = System.currentTimeMillis();
         long diffTime = (curTime - lastUpdate);
 
@@ -140,16 +170,13 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
 
             SensorManager.getRotationMatrix(rotationMatrix, null, gravityMatrix, magneticMatrix);
 
-            accelerometerWorldMatrix[0] = rotationMatrix[0] * accelerometerMatrix[0] + rotationMatrix[1] * accelerometerMatrix[1] + rotationMatrix[2] * accelerometerMatrix[2];
-            accelerometerWorldMatrix[1] = rotationMatrix[3] * accelerometerMatrix[0] + rotationMatrix[4] * accelerometerMatrix[1] + rotationMatrix[5] * accelerometerMatrix[2];
-            accelerometerWorldMatrix[2] = rotationMatrix[6] * accelerometerMatrix[0] + rotationMatrix[7] * accelerometerMatrix[1] + rotationMatrix[8] * accelerometerMatrix[2];
 
             accX.setText(String.format("%.2f", accelerometerMatrix[0]));
             accY.setText(String.format("%.2f", accelerometerMatrix[1]));
             accZ.setText(String.format("%.2f", accelerometerMatrix[2]));
-            accWorldX.setText(String.format("%.2f", accelerometerWorldMatrix[0]));
-            accWorldY.setText(String.format("%.2f", accelerometerWorldMatrix[1]));
-            accWorldZ.setText(String.format("%.2f", accelerometerWorldMatrix[2]));
+            gravityX.setText(String.format("%.2f", gravityMatrix[0]));
+            gravityY.setText(String.format("%.2f", pushupCounter));
+            gravityZ.setText(String.format("%.2f", gravityMatrix[2]));
             gyroX.setText(String.format("%.2f", gyroscopeMatrix[0]));
             gyroY.setText(String.format("%.2f", gyroscopeMatrix[1]));
             gyroZ.setText(String.format("%.2f", gyroscopeMatrix[2]));
@@ -169,4 +196,41 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         //safe not to implement
     }
+
+    public void findLowPoint(float lastIndex){
+        timer = 0;
+
+            if (lastIndex > 8f && lastIndex < 11f) {
+                //gravYvalues = (ArrayList<Float>) gravYvalues.subList(gravYvalues.indexOf(lastIndex), gravYvalues.indexOf(gravYvalues.get(gravYvalues.size())));
+                switchStateTracker = 1;
+                lastLowPoint = lastIndex;
+            }
+
+    }
+
+    public void findHighPoint(float lastIndex){
+
+            if (lastIndex > -0f && lastIndex < 4f  ){
+              switchStateTracker = 2;
+            }
+            else if (lastIndex > lastLowPoint || timer > 2000){
+                switchStateTracker = 0;
+            }
+
+    }
+
+    public void confirmPushup(float lastIndex){
+
+
+            Log.d("Confirm pushup", "confirmed" + lastIndex);
+            if ((lastIndex > 3f && lastIndex < 4.5f) && (timer < 2000 && timer > 300)){
+                pushupCounter++;
+                switchStateTracker = 0;
+            }
+            else {
+                Log.d("Confirm pushup", "not confirmed");
+                switchStateTracker = 0;
+            }
+    }
+
 }

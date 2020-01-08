@@ -77,77 +77,81 @@
         android:layout_below="@+id/raw_label_acc_z" />
 
     <TextView
-        android:id="@+id/raw_label_acc_world"
+        android:id="@+id/raw_label_grav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/raw_acc_spacer"
         android:paddingBottom="@dimen/raw_header_bottom_pad"
-        android:text="@string/raw_acc_world_header"
+        android:text="@string/raw_grav_header"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/raw_label_acc_world_x"
+        android:id="@+id/raw_label_grav_x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
-        android:layout_below="@+id/raw_label_acc_world"
+        android:layout_below="@+id/raw_label_grav"
         android:paddingRight="@dimen/raw_axes_right_pad"
         android:text="X:"
         android:textColor="@color/graphX" />
 
     <TextView
-        android:id="@+id/raw_label_acc_world_y"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/raw_label_acc_world_x"
+        android:id="@+id/raw_label_grav_y"
+        android:layout_width="274dp"
+        android:layout_height="456dp"
+        android:layout_below="@+id/raw_label_grav_x"
         android:paddingRight="@dimen/raw_axes_right_pad"
         android:text="Y:"
         android:textColor="@color/graphY" />
 
     <TextView
-        android:id="@+id/raw_label_acc_world_z"
+        android:id="@+id/raw_label_grav_z"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/raw_label_acc_world_y"
+        android:layout_below="@+id/raw_label_grav_y"
         android:paddingRight="@dimen/raw_axes_right_pad"
         android:text="Z:"
         android:textColor="@color/graphZ" />
 
     <TextView
-        android:id="@+id/raw_value_acc_world_x"
+        android:id="@+id/raw_value_grav_x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/raw_label_acc_world_x"
-        android:layout_alignBottom="@+id/raw_label_acc_world_x"
-        android:layout_toEndOf="@+id/raw_label_acc_world_x"
+        android:layout_alignBaseline="@+id/raw_label_grav_x"
+        android:layout_alignBottom="@+id/raw_label_grav_x"
+        android:layout_toEndOf="@+id/raw_label_grav_x"
         android:textColor="@color/graphX"
-        android:layout_toRightOf="@+id/raw_label_acc_world_x" />
+        android:layout_toRightOf="@+id/raw_label_grav_x" />
 
     <TextView
-        android:id="@+id/raw_value_acc_world_y"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/raw_label_acc_world_y"
-        android:layout_alignBottom="@+id/raw_label_acc_world_y"
-        android:layout_toEndOf="@+id/raw_label_acc_world_y"
+        android:id="@+id/raw_value_grav_y"
+        android:layout_width="276dp"
+        android:layout_height="479dp"
+        android:layout_alignBaseline="@+id/raw_label_grav_y"
+        android:layout_alignEnd="@+id/raw_label_grav_y"
+        android:layout_alignRight="@+id/raw_label_grav_y"
+        android:layout_alignBottom="@+id/raw_label_grav_y"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginRight="-2dp"
+        android:layout_marginBottom="2dp"
         android:textColor="@color/graphY"
-        android:layout_toRightOf="@+id/raw_label_acc_world_y" />
+        android:textSize="136sp" />
 
     <TextView
-        android:id="@+id/raw_value_acc_world_z"
+        android:id="@+id/raw_value_grav_z"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/raw_label_acc_world_z"
-        android:layout_alignBottom="@+id/raw_label_acc_world_z"
-        android:layout_toEndOf="@+id/raw_label_acc_world_z"
+        android:layout_alignBaseline="@+id/raw_label_grav_z"
+        android:layout_alignBottom="@+id/raw_label_grav_z"
+        android:layout_toEndOf="@+id/raw_label_grav_z"
         android:textColor="@color/graphZ"
-        android:layout_toRightOf="@+id/raw_label_acc_world_z" />
+        android:layout_toRightOf="@+id/raw_label_grav_z" />
 
     <Space
         android:id="@+id/raw_acc_world_spacer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/raw_spacer_height"
-        android:layout_below="@+id/raw_label_acc_world_z" />
+        android:layout_below="@+id/raw_label_grav_z" />
 
     <TextView
         android:id="@+id/raw_label_gyro"
