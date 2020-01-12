@@ -13,7 +13,7 @@
         android:id="@+id/raw_value_grav_y"
         android:layout_width="173dp"
         android:layout_height="127dp"
-        android:text="999"
+        android:gravity="center"
         android:textColor="@color/graphY"
         android:textSize="100sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -75,6 +75,7 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
 
         //Get text fields
         gravityY = (TextView) view.findViewById(R.id.raw_value_grav_y);
+        gravityY.setText("");
 
         return view;
     }
@@ -138,7 +139,7 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
             SensorManager.getRotationMatrix(rotationMatrix, null, gravityMatrix, magneticMatrix);
 
 
-            gravityY.setText(pushupCounter);
+            gravityY.setText("" + pushupCounter);
         }
     }
 
