@@ -105,5 +105,8 @@
 <string name="device_gravity_label">Gravity:</string>
 <string name="device_magnetometer_label">Magnetometer:</string>
     <string name="raw_grav_header">Gravity</string>
+    <string name="exercise_tracker">Exercise Tracker</string>
+    <string name="start">Start</string>
+    <string name="statistik">Statistik</string>
 
 </resources>

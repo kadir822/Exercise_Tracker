@@ -16,7 +16,8 @@
         android:layout_alignParentTop="true"
         android:gravity="center_vertical"
         android:textStyle="bold"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/start_value_subNum"
@@ -24,7 +25,8 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/start_label_subNum"
         android:gravity="center_vertical"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
 
 
     <Button
@@ -46,7 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/startButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button4"

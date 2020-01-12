@@ -51,75 +51,75 @@ public class StartFragment extends Fragment implements View.OnClickListener {
         mainActivity.setTitle("Start");
 
         //Get form text view element and set
-        recordProgressMessage = (TextView) view.findViewById(R.id.start_recording_progress);
+//        recordProgressMessage = (TextView) view.findViewById(R.id.start_recording_progress);
 
         //Set onclick listener for save button
         startButton = (Button) view.findViewById(R.id.startButton);
         startButton.setOnClickListener(this);
 
         //Set button state depending on whether recording has been started and/or stopped
-        if(MainActivity.dataRecordStarted){
-            if(MainActivity.dataRecordCompleted){
-                //started and completed: disable button completely
-                startButton.setEnabled(false);
-                startButton.setText(R.string.start_button_label_stop);
-            } else {
-                //started and not completed: enable STOP button
-                startButton.setEnabled(true);
-                startButton.setText(R.string.start_button_label_stop);
-            }
-        } else {
-            //Haven't started: enable START button
-            startButton.setEnabled(true);
-            startButton.setText(R.string.start_button_label_start);
-        }
-
-        // Inflate the layout for this fragment
-        return view;
+//        if(MainActivity.dataRecordStarted){
+//            if(MainActivity.dataRecordCompleted){
+//                //started and completed: disable button completely
+//                startButton.setEnabled(false);
+//                startButton.setText(R.string.start_button_label_stop);
+//            } else {
+//                //started and not completed: enable STOP button
+//                startButton.setEnabled(true);
+//                startButton.setText(R.string.start_button_label_stop);
+//            }
+//        } else {
+//            //Haven't started: enable START button
+//            startButton.setEnabled(true);
+//            startButton.setText(R.string.start_button_label_start);
+//        }
+//
+//        // Inflate the layout for this fragment
+      return view;
     }
 
     @Override
     public void onClick(View v) {
-        if (!MainActivity.dataRecordStarted){
-                //Set recording progress messages
-                mainActivity.addFragment(new TrackingFragment(), true);
-                MainActivity.dataRecordStarted = true;
-                startButton.setText(R.string.start_button_label_stop);
-
-
-        } else {
-            MainActivity.dataRecordCompleted = true;
-            startButton.setEnabled(false);
-            recordProgressMessage.setText("");
-        }
+//        if (!MainActivity.dataRecordStarted){
+//                //Set recording progress messages
+//                mainActivity.addFragment(new TrackingFragment(), true);
+//                MainActivity.dataRecordStarted = true;
+//                startButton.setText(R.string.start_button_label_stop);
+//
+//
+//        } else {
+//            MainActivity.dataRecordCompleted = true;
+//            startButton.setEnabled(false);
+//            recordProgressMessage.setText("");
+//        }
     }
 
     //Message handler for service
-    public static Handler messageHandler = new MessageHandler();
-
-    public static class MessageHandler extends Handler {
-        @Override
-        public void handleMessage(Message message) {
-            int state = message.arg1;
-            switch (state) {
-                case 0:
-                    //Dismiss dialog
-                    stopDialog.dismiss();
-                    Log.d(TAG, "Stop dialog dismissed");
-                    break;
-
-                case 1:
-                    //Show stop dialog
-                    stopDialog = new ProgressDialog(mainActivity);
-                    stopDialog.setTitle("Stopping sensors");
-                    stopDialog.setMessage("Please wait...");
-                    stopDialog.setProgressNumberFormat(null);
-                    stopDialog.setCancelable(false);
-                    stopDialog.setMax(100);
-                    stopDialog.show();
-                    Log.d(TAG, "Stop dialog displayed");
-                    break;
-            }
-        }
-    }
+//    public static Handler messageHandler = new MessageHandler();
+//
+//    public static class MessageHandler extends Handler {
+//        @Override
+//        public void handleMessage(Message message) {
+//            int state = message.arg1;
+//            switch (state) {
+//                case 0:
+//                    //Dismiss dialog
+//                    stopDialog.dismiss();
+//                    Log.d(TAG, "Stop dialog dismissed");
+//                    break;
+//
+//                case 1:
+//                    //Show stop dialog
+//                    stopDialog = new ProgressDialog(mainActivity);
+//                    stopDialog.setTitle("Stopping sensors");
+//                    stopDialog.setMessage("Please wait...");
+//                    stopDialog.setProgressNumberFormat(null);
+//                    stopDialog.setCancelable(false);
+//                    stopDialog.setMax(100);
+//                    stopDialog.show();
+//                    Log.d(TAG, "Stop dialog displayed");
+//                    break;
+//            }
+//        }
+//    }
 }

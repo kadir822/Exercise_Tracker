@@ -8,7 +8,7 @@
         android:title="Menu"
         app:showAsAction="never" />
 
-    <--! add submenu -->
+
 
     <item
         android:id="@+id/action_settings"
