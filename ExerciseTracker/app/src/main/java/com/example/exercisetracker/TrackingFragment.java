@@ -34,6 +34,7 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
 
     MainActivity mainActivity;
     TextView gravityY;
+    TextView currentExerciseField;
 
 
     float[] accelerometerMatrix = new float[3];
@@ -47,6 +48,7 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
     int switchStateTracker = 0;
     int pushupCounter = 0;
     float lastLowPoint = 0;
+    String currentExercise;
 
     int timer = 0;
 
@@ -76,6 +78,8 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
         //Get text fields
         gravityY = (TextView) view.findViewById(R.id.raw_value_grav_y);
         gravityY.setText("");
+        currentExerciseField = (TextView) view.findViewById(R.id.currentExercise);
+        currentExerciseField.setText("");
 
         return view;
     }
@@ -114,20 +118,19 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
 
         switch(switchStateTracker){
             case(0):
-                Log.d("Timer:", ""+timer);
+
                 findLowPoint(gravityMatrix[1]);
                 break;
             case(1):
                 findHighPoint(gravityMatrix[1]);
-                Log.d("Timer:", ""+timer);
                 break;
             case(2):
                 confirmPushup(gravityMatrix[1]);
-                Log.d("Timer:", ""+timer);
                 break;
             default:
                 break;
         }
+        Log.d("Timer:", ""+switchStateTracker);
 
         long curTime = System.currentTimeMillis();
         long diffTime = (curTime - lastUpdate);
@@ -138,7 +141,7 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
 
             SensorManager.getRotationMatrix(rotationMatrix, null, gravityMatrix, magneticMatrix);
 
-
+            currentExerciseField.setText(currentExercise);
             gravityY.setText("" + pushupCounter);
         }
     }
@@ -161,7 +164,7 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
 
     public void findHighPoint(float lastIndex){
 
-            if (lastIndex > -0f && lastIndex < 4f  ){
+            if (lastIndex > 0f && lastIndex < 4f  ){
               switchStateTracker = 2;
             }
             else if (lastIndex > lastLowPoint || timer > 2000){
@@ -174,12 +177,13 @@ public class TrackingFragment extends Fragment implements SensorEventListener {
 
 
             Log.d("Confirm pushup", "confirmed" + lastIndex);
-            if ((lastIndex > 3f && lastIndex < 4.5f) && (timer < 2000 && timer > 300)){
+
+            if ((lastIndex > 8f && lastIndex < 11f) && (timer < 2000 && timer > 300)){
+                currentExercise = "Push-Ups:";
                 pushupCounter++;
                 switchStateTracker = 0;
             }
-            else {
-                Log.d("Confirm pushup", "not confirmed");
+            else if ( timer > 2000){
                 switchStateTracker = 0;
             }
     }
